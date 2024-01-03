@@ -1,4 +1,4 @@
-package be.ehb.starwarsinfo;
+package be.ehb.starwarsinfo.views;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -7,6 +7,7 @@ import android.widget.TextView;
 
 import java.io.IOException;
 
+import be.ehb.starwarsinfo.R;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
 import okhttp3.Response;
@@ -20,8 +21,6 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        tvResult = findViewById(R.id.tv_result);
-
         Thread backgroundThread = new Thread(new Runnable() {
             @Override
             public void run() {
@@ -34,14 +33,12 @@ public class MainActivity extends AppCompatActivity {
                     Response mResponse = mClient.newCall(mRequest).execute();
                     String responseText = mResponse.body().string();
 
-                    tvResult.setText(responseText);
-
                 } catch (IOException e) {
                     throw new RuntimeException(e);
                 }
             }
         });
 
-        backgroundThread.start();
+//        backgroundThread.start();
     }
 }
