@@ -2,8 +2,12 @@ package be.ehb.starwarsinfo.views;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Context;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.os.Bundle;
 import android.util.Log;
+import android.widget.Toast;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -42,10 +46,11 @@ public class MainActivity extends AppCompatActivity {
 
                 while (!lastPageReached) {
                     Request mRequest = new Request.Builder()
-                            .url(API_URL + "/?page=" + currentPage)
-                            .get()
-                            .build();
+                        .url(API_URL + "/?page=" + currentPage)
+                        .get()
+                        .build();
                     Response mResponse = mClient.newCall(mRequest).execute();
+
                     String responseText = mResponse.body().string();
                     JSONObject ResultJSONObject = new JSONObject(responseText);
                     JSONArray planetsJSON = new JSONArray(ResultJSONObject.getString("results"));
@@ -79,12 +84,26 @@ public class MainActivity extends AppCompatActivity {
 
                     currentPage++;
                 }
+                runOnUiThread(() -> Toast.makeText(getApplicationContext(),"Succesfully updated data", Toast.LENGTH_LONG).show());
 
-            } catch (IOException | JSONException e) {
-                throw new RuntimeException(e);
+            } catch (IOException e) {
+                runOnUiThread(() -> Toast.makeText(MainActivity.this, "Network error: " + e.getMessage(), Toast.LENGTH_SHORT).show());
+            } catch (JSONException e) {
+                runOnUiThread(() -> Toast.makeText(MainActivity.this, "JSON parsing error: " + e.getMessage(), Toast.LENGTH_SHORT).show());
             }
         });
 
-        backgroundThread.start();
+        if (isNetworkAvailable()){
+            backgroundThread.start();
+        } else {
+            //Log.d("TAG", "No internet connection found");
+            Toast.makeText(getApplicationContext(),"No data was updated, no internet connection found", Toast.LENGTH_LONG).show();
+        }
+    }
+
+    private boolean isNetworkAvailable() {
+        ConnectivityManager connectivityManager = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
+        NetworkInfo activeNetworkInfo = connectivityManager != null ? connectivityManager.getActiveNetworkInfo() : null;
+        return activeNetworkInfo != null && activeNetworkInfo.isConnectedOrConnecting();
     }
 }
