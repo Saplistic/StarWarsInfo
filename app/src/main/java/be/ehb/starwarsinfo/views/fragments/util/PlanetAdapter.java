@@ -1,0 +1,92 @@
+package be.ehb.starwarsinfo.views.fragments.util;
+
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
+import android.widget.RelativeLayout;
+import android.widget.TextView;
+
+import androidx.annotation.NonNull;
+import androidx.recyclerview.widget.RecyclerView;
+
+import java.text.DecimalFormat;
+import java.text.NumberFormat;
+import java.text.ParseException;
+import java.util.ArrayList;
+import java.util.Objects;
+
+import be.ehb.starwarsinfo.R;
+import be.ehb.starwarsinfo.model.Planet;
+
+public class PlanetAdapter extends RecyclerView.Adapter<PlanetAdapter.PlanetViewHolder> {
+
+    private ArrayList<Planet> items;
+
+    public PlanetAdapter() {
+        this.items = new ArrayList<>();
+    }
+
+    public void setItems(ArrayList<Planet> items) {
+        this.items = items;
+    }
+
+    @NonNull
+    @Override
+    public PlanetAdapter.PlanetViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+        LayoutInflater inflater = LayoutInflater.from(parent.getContext());
+        View view = inflater.inflate(R.layout.planet_overview_item, parent, false);
+        return new PlanetViewHolder(view);
+    }
+
+    @Override
+    public void onBindViewHolder(@NonNull PlanetAdapter.PlanetViewHolder holder, int position) {
+        Planet planet = items.get(position);
+        holder.tvName.setText(planet.getName());
+        holder.tvDiameter.setText(planet.getDiameter() + " km");
+
+        if (Objects.equals(planet.getPopulation(), "unknown")) {
+            holder.tvPopulation.setText("unknown");
+            return;
+        }
+
+        try {
+            Number number = NumberFormat.getInstance().parse(planet.getPopulation());
+            holder.tvPopulation.setText(prettyCount(number) + " inhabitants");
+        } catch (ParseException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    public String prettyCount(Number number) { // Imported code
+        char[] suffix = {' ', 'k', 'M', 'B', 'T', 'P', 'E'};
+        long numValue = number.longValue();
+        int value = (int) Math.floor(Math.log10(numValue));
+        int base = value / 3;
+        if (value >= 3 && base < suffix.length) {
+            return new DecimalFormat("#0.0").format(numValue / Math.pow(10, base * 3)) + suffix[base];
+        } else {
+            return new DecimalFormat("#,##0").format(numValue);
+        }
+    }
+
+    @Override
+    public int getItemCount() {
+        return items.size();
+    }
+
+    public class PlanetViewHolder extends RecyclerView.ViewHolder {
+
+        TextView tvName;
+        TextView tvDiameter;
+        TextView tvPopulation;
+        RelativeLayout row;
+
+        public PlanetViewHolder(@NonNull View itemView) {
+            super(itemView);
+            row = itemView.findViewById(R.id.planet_item);
+            tvName = itemView.findViewById(R.id.tv_planet_name);
+            tvDiameter = itemView.findViewById(R.id.tv_planet_diameter);
+            tvPopulation = itemView.findViewById(R.id.tv_planet_population);
+        }
+    }
+}

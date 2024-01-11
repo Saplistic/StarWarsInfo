@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/planet_item"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:padding="6dp">
+
+    <ImageView
+        android:id="@+id/iv_planet_cover"
+        android:layout_width="64dp"
+        android:layout_height="64dp"
+        android:layout_marginEnd="10dp"
+        android:adjustViewBounds="true"
+        android:background="@color/black"
+        android:scaleType="centerInside"
+        tools:adjustViewBounds="true"
+        android:contentDescription="Picture of SW planet" />
+
+    <TextView
+        android:id="@+id/tv_planet_name"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="5dp"
+        android:layout_toEndOf="@id/iv_planet_cover"
+        tools:text="[Name planet]" />
+
+    <TextView
+        android:id="@+id/tv_planet_diameter"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/tv_planet_name"
+        android:layout_toEndOf="@id/iv_planet_cover"
+        tools:text="[Diameter planet]" />
+
+    <TextView
+        android:id="@+id/tv_planet_population"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/tv_planet_name"
+        android:layout_marginStart="30dp"
+        android:layout_toEndOf="@id/tv_planet_diameter"
+        tools:text="[Amount of inhabitants]" />
+
+
+</RelativeLayout>
