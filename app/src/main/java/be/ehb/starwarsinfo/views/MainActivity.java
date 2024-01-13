@@ -1,6 +1,12 @@
 package be.ehb.starwarsinfo.views;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
+import androidx.navigation.NavController;
+import androidx.navigation.Navigation;
+import androidx.navigation.fragment.NavHostFragment;
+import androidx.navigation.ui.AppBarConfiguration;
+import androidx.navigation.ui.NavigationUI;
 
 import android.content.Context;
 import android.net.ConnectivityManager;
@@ -24,6 +30,8 @@ import okhttp3.Response;
 
 public class MainActivity extends AppCompatActivity {
 
+    private AppBarConfiguration appBarConfiguration;
+    private NavController navController;
     private final String API_URL = "https://swapi.dev/api/planets";
     SWInfoDatabase SWInfoDB;
 
@@ -37,6 +45,21 @@ public class MainActivity extends AppCompatActivity {
         } else {
             Toast.makeText(getApplicationContext(),"No data was updated, no internet connection found", Toast.LENGTH_LONG).show();
         }
+
+        Toolbar mToolbar = findViewById(R.id.toolbar_main);
+        setSupportActionBar(mToolbar);
+
+        NavHostFragment navHostFragment = (NavHostFragment) getSupportFragmentManager().findFragmentById(R.id.fragment_container);
+        navController = navHostFragment.getNavController();
+        appBarConfiguration = new AppBarConfiguration.Builder(navController.getGraph()).build();
+        NavigationUI.setupActionBarWithNavController(this, navController, appBarConfiguration);
+    }
+
+    @Override
+    public boolean onSupportNavigateUp() {
+        NavController navController = Navigation.findNavController(this, R.id.fragment_container);
+        return NavigationUI.navigateUp(navController, appBarConfiguration)
+                || super.onSupportNavigateUp();
     }
 
     Thread backgroundThread = new Thread(() ->
