@@ -9,5 +9,14 @@
         android:id="@+id/planetOverviewFragment"
         android:name="be.ehb.starwarsinfo.views.fragments.PlanetOverviewFragment"
         android:label="fragment_planet_overview"
-        tools:layout="@layout/fragment_planet_overview" />
+        tools:layout="@layout/fragment_planet_overview" >
+        <action
+            android:id="@+id/action_planetOverviewFragment_to_planetDetailsFragment"
+            app:destination="@id/planetDetailsFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/planetDetailsFragment"
+        android:name="be.ehb.starwarsinfo.views.fragments.PlanetDetailsFragment"
+        android:label="fragment_planet_details"
+        tools:layout="@layout/fragment_planet_details" />
 </navigation>

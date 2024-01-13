@@ -1,5 +1,6 @@
 package be.ehb.starwarsinfo.views.fragments.util;
 
+import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -7,16 +8,17 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.navigation.Navigation;
 import androidx.recyclerview.widget.RecyclerView;
+
+import be.ehb.starwarsinfo.R;
+import be.ehb.starwarsinfo.model.Planet;
 
 import java.text.DecimalFormat;
 import java.text.NumberFormat;
 import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.Objects;
-
-import be.ehb.starwarsinfo.R;
-import be.ehb.starwarsinfo.model.Planet;
 
 public class PlanetAdapter extends RecyclerView.Adapter<PlanetAdapter.PlanetViewHolder> {
 
@@ -87,6 +89,14 @@ public class PlanetAdapter extends RecyclerView.Adapter<PlanetAdapter.PlanetView
             tvName = itemView.findViewById(R.id.tv_planet_name);
             tvDiameter = itemView.findViewById(R.id.tv_planet_diameter);
             tvPopulation = itemView.findViewById(R.id.tv_planet_population);
+
+            row.setOnClickListener((View v) -> {
+                Planet selectedPlanet = items.get(getAdapterPosition());
+                Bundle data = new Bundle();
+                data.putSerializable("selectedPlanet", selectedPlanet);
+
+                Navigation.findNavController(itemView).navigate(R.id.action_planetOverviewFragment_to_planetDetailsFragment, data);
+            });
         }
     }
 }
