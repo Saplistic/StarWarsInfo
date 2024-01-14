@@ -18,7 +18,6 @@ import java.text.DecimalFormat;
 import java.text.NumberFormat;
 import java.text.ParseException;
 import java.util.ArrayList;
-import java.util.Objects;
 
 public class PlanetAdapter extends RecyclerView.Adapter<PlanetAdapter.PlanetViewHolder> {
 
@@ -46,16 +45,15 @@ public class PlanetAdapter extends RecyclerView.Adapter<PlanetAdapter.PlanetView
         holder.tvName.setText(planet.getName());
         holder.tvDiameter.setText(planet.getDiameter() + " km");
 
-        if (Objects.equals(planet.getPopulation(), "unknown")) {
+        if (planet.getPopulation().equals("unknown")) {
             holder.tvPopulation.setText("unknown");
-            return;
-        }
-
-        try {
-            Number number = NumberFormat.getInstance().parse(planet.getPopulation());
-            holder.tvPopulation.setText(prettyCount(number) + " inhabitants");
-        } catch (ParseException e) {
-            throw new RuntimeException(e);
+        } else {
+            try {
+                Number number = NumberFormat.getInstance().parse(planet.getPopulation());
+                holder.tvPopulation.setText(prettyCount(number) + " inhabitants");
+            } catch (ParseException e) {
+                throw new RuntimeException(e);
+            }
         }
     }
 

@@ -78,7 +78,7 @@ public class PlanetDetailsFragment extends Fragment {
             }
         }
 
-        diameter.setText(selectedPlanet.getDiameter());
+        diameter.setText(selectedPlanet.getDiameter() + " km");
         terrain.setText(selectedPlanet.getTerrain());
         climate.setText(selectedPlanet.getClimate());
         surface_water.setText(selectedPlanet.getSurface_water() + "%");
