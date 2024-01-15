@@ -20,6 +20,7 @@ public class Planet implements Serializable {
     private String terrain;
     private String surface_water;
     private String population;
+    private String image_url;
 
     public Planet() {
     }
@@ -59,6 +60,14 @@ public class Planet implements Serializable {
 
     public void setRotation_period(String rotation_period) {
         this.rotation_period = rotation_period;
+    }
+
+    public String getImage_url() {
+        return image_url;
+    }
+
+    public void setImage_url(String image_url) {
+        this.image_url = image_url;
     }
 
     public String getOrbital_period() {

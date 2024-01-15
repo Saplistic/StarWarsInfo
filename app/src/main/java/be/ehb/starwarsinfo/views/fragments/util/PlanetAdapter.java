@@ -4,12 +4,15 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.navigation.Navigation;
 import androidx.recyclerview.widget.RecyclerView;
+
+import com.bumptech.glide.Glide;
 
 import be.ehb.starwarsinfo.R;
 import be.ehb.starwarsinfo.model.Planet;
@@ -45,6 +48,10 @@ public class PlanetAdapter extends RecyclerView.Adapter<PlanetAdapter.PlanetView
         holder.tvName.setText(planet.getName());
         holder.tvDiameter.setText(planet.getDiameter() + " km");
 
+        Glide.with(holder.itemView)
+                .load(planet.getImage_url())
+                .into(holder.ivPlanet);
+
         if (planet.getPopulation().equals("unknown")) {
             holder.tvPopulation.setText("unknown");
         } else {
@@ -77,6 +84,7 @@ public class PlanetAdapter extends RecyclerView.Adapter<PlanetAdapter.PlanetView
     public class PlanetViewHolder extends RecyclerView.ViewHolder {
 
         TextView tvName;
+        ImageView ivPlanet;
         TextView tvDiameter;
         TextView tvPopulation;
         RelativeLayout row;
@@ -85,6 +93,7 @@ public class PlanetAdapter extends RecyclerView.Adapter<PlanetAdapter.PlanetView
             super(itemView);
             row = itemView.findViewById(R.id.planet_item);
             tvName = itemView.findViewById(R.id.tv_planet_name);
+            ivPlanet = itemView.findViewById(R.id.iv_planet_cover);
             tvDiameter = itemView.findViewById(R.id.tv_planet_diameter);
             tvPopulation = itemView.findViewById(R.id.tv_planet_population);
 
