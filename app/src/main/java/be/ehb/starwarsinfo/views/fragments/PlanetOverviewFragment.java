@@ -55,6 +55,7 @@ public class PlanetOverviewFragment extends Fragment {
         mAdapter = new PlanetAdapter();
         mRecyclerView.setLayoutManager(new LinearLayoutManager(getContext(), RecyclerView.VERTICAL, false));
 
+        // Update the adapter items each time the database table is updated
         SWInfoDB.getPlanetDAO().getAllPlanets().observe(getViewLifecycleOwner(), planets -> {
             items = (ArrayList<Planet>) planets;
             mAdapter.setItems(items);
@@ -62,6 +63,7 @@ public class PlanetOverviewFragment extends Fragment {
         });
     }
 
+    // Search menu setup
     @Override
     public void onCreateOptionsMenu(@NonNull Menu menu, @NonNull MenuInflater inflater) {
         inflater.inflate(R.menu.overview_menu, menu);
@@ -76,16 +78,18 @@ public class PlanetOverviewFragment extends Fragment {
                 return false;
             }
 
+            // Filter adapter items on text change
             @Override
             public boolean onQueryTextChange(String newText) {
                 mAdapter.setItems(filterList(items, newText));
                 mRecyclerView.setAdapter(mAdapter);
-                return false;
+                return true;
             }
         });
         super.onCreateOptionsMenu(menu, inflater);
     }
 
+    // Filter planet list on search query
     private ArrayList<Planet> filterList(ArrayList<Planet> list, String filterQuery) {
         ArrayList<Planet> filteredList = new ArrayList<>();
 

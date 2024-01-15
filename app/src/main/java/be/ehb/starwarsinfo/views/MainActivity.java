@@ -42,15 +42,18 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        // Check if network is available, if so, start background thread to update data
         if (isNetworkAvailable()){
             backgroundThread.start();
         } else {
             Toast.makeText(getApplicationContext(),"No data was updated, no internet connection found", Toast.LENGTH_LONG).show();
         }
 
+        // Set toolbar as actionbar
         Toolbar mToolbar = findViewById(R.id.toolbar_main);
         setSupportActionBar(mToolbar);
 
+        // Add navigation controls to toolbar
         NavHostFragment navHostFragment = (NavHostFragment) getSupportFragmentManager().findFragmentById(R.id.fragment_container);
         navController = navHostFragment.getNavController();
         appBarConfiguration = new AppBarConfiguration.Builder(navController.getGraph()).build();
@@ -66,6 +69,7 @@ public class MainActivity extends AppCompatActivity {
 
     Thread backgroundThread = new Thread(() ->
     {
+        // A set of image urls for planets with custom image urls, mapped by a planets name
         Map<String, String> customPlanetImageUrls = new HashMap<String, String>() {{
             put("Tatooine", "https://static.wikia.nocookie.net/starwars/images/7/7f/Tatooine.jpg/revision/latest?cb=20070118145039&path-prefix=nl");
             put("Stewjon", "?");
@@ -118,6 +122,7 @@ public class MainActivity extends AppCompatActivity {
             int currentPage = 1;
             boolean lastPageReached = false;
 
+            // Loop through all pages of the API and add its data to the local database
             while (!lastPageReached) {
                 Request mRequest = new Request.Builder()
                         .url(API_URL + "/?page=" + currentPage)
@@ -152,6 +157,7 @@ public class MainActivity extends AppCompatActivity {
                     );
                     planet.setId((((currentPage-1) * 10) + i) + 1);
 
+                    // Check if planet has a custom image url, if not, use the default one
                     if (customPlanetImageUrls.containsKey(planet.getName())) {
                         planet.setImage_url(customPlanetImageUrls.get(planet.getName()));
                     } else {
@@ -174,7 +180,7 @@ public class MainActivity extends AppCompatActivity {
         }
     });
 
-    private boolean isNetworkAvailable() {
+    private boolean isNetworkAvailable() { // Imported code
         ConnectivityManager connectivityManager = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
         NetworkInfo activeNetworkInfo = connectivityManager != null ? connectivityManager.getActiveNetworkInfo() : null;
         return activeNetworkInfo != null && activeNetworkInfo.isConnectedOrConnecting();

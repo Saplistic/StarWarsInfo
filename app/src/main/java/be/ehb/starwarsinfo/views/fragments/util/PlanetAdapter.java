@@ -97,6 +97,7 @@ public class PlanetAdapter extends RecyclerView.Adapter<PlanetAdapter.PlanetView
             tvDiameter = itemView.findViewById(R.id.tv_planet_diameter);
             tvPopulation = itemView.findViewById(R.id.tv_planet_population);
 
+            // Navigate to details fragment along with the selected planet on item click
             row.setOnClickListener((View v) -> {
                 Planet selectedPlanet = items.get(getAdapterPosition());
                 Bundle data = new Bundle();
