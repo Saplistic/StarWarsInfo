@@ -9,7 +9,10 @@ import androidx.fragment.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
+
+import com.bumptech.glide.Glide;
 
 import java.text.DecimalFormat;
 import java.text.NumberFormat;
@@ -21,6 +24,7 @@ import be.ehb.starwarsinfo.model.Planet;
 public class PlanetDetailsFragment extends Fragment {
 
     TextView name;
+    ImageView cover;
     TextView rotation_period;
     TextView orbital_period;
     TextView diameter;
@@ -56,6 +60,7 @@ public class PlanetDetailsFragment extends Fragment {
         Planet selectedPlanet = (Planet) getArguments().getSerializable("selectedPlanet");
 
         name = view.findViewById(R.id.tv_planet_details_title);
+        cover = view.findViewById(R.id.iv_planet_details_cover);
         population = view.findViewById(R.id.tv_planet_details_value);
         diameter = view.findViewById(R.id.tv_planet_details_value1);
         terrain = view.findViewById(R.id.tv_planet_details_value2);
@@ -66,6 +71,9 @@ public class PlanetDetailsFragment extends Fragment {
         orbital_period = view.findViewById(R.id.tv_planet_details_value7);
 
         name.setText(selectedPlanet.getName());
+        Glide.with(this)
+                .load(selectedPlanet.getImage_url())
+                .into(cover);
 
         if (selectedPlanet.getPopulation().equals("unknown")) {
             population.setText("unknown");
