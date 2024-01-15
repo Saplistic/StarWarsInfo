@@ -27,7 +27,7 @@ public class PlanetOverviewFragment extends Fragment {
 
     private SWInfoDatabase SWInfoDB;
     private RecyclerView mRecyclerView;
-    private PlanetAdapter mAdapter = new PlanetAdapter();
+    private PlanetAdapter mAdapter;
     private ArrayList<Planet> items;
 
     public PlanetOverviewFragment() {

@@ -12,7 +12,6 @@ import android.content.Context;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.Bundle;
-import android.util.Log;
 import android.widget.Toast;
 
 import org.json.JSONArray;
@@ -36,7 +35,7 @@ public class MainActivity extends AppCompatActivity {
     private AppBarConfiguration appBarConfiguration;
     private NavController navController;
     private final String API_URL = "https://swapi.dev/api/planets";
-    SWInfoDatabase SWInfoDB;
+    private SWInfoDatabase SWInfoDB;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -96,14 +95,14 @@ public class MainActivity extends AppCompatActivity {
             put("Tholoth", "?");
             put("Iktotch", "https://static.wikia.nocookie.net/starwars/images/f/f1/Iktotch_FDNP.png/revision/latest?cb=20180501025533"); //legends
             put("Quermia", "https://static.wikia.nocookie.net/starwars/images/2/29/Quermia_NEGAS.jpg/revision/latest?cb=20070701083603"); //legends
-            put("Dorin", "https://starwars.fandom.com/wiki/Dorin/Legends?file=Dorin-FDCR.png"); //legends
-            put("Champala", "https://starwars.fandom.com/wiki/Champala/Legends?file=Champala_NEGAS.jpg"); //legends
+            put("Dorin", "https://static.wikia.nocookie.net/starwars/images/9/9b/Dorin-FDCR.png/revision/latest?cb=20160304050545"); //legends
+            put("Champala", "https://static.wikia.nocookie.net/starwars/images/d/d7/Champala_NEGAS.jpg/revision/latest?cb=20061114221731"); //legends
             put("Mirial", "https://static.wikia.nocookie.net/star-wars-pathfinder/images/e/e0/Mirial.jpg/revision/latest?cb=20170612022003");
             put("Serenno", "https://static.wikia.nocookie.net/starwars/images/b/b2/Serenno-Massacre.png/revision/latest?cb=20130607043719");
             put("Concord Dawn", "https://static.wikia.nocookie.net/starwars/images/8/84/Concord_Dawn_system.png/revision/latest?cb=20160128214904");
             put("Zolan", "https://static.wikia.nocookie.net/starwars/images/6/66/Zolan.jpg/revision/latest?cb=20070701111500"); //legends
             put("Ojom", "https://static.wikia.nocookie.net/starwars/images/9/9f/Ojom.jpg/revision/latest?cb=20061119201000"); //legends
-            put("Skako", "https://starwars.fandom.com/wiki/Skako/Legends?file=Skako.jpg"); //legends
+            put("Skako", "https://static.wikia.nocookie.net/starwars/images/c/cd/Skako.jpg/revision/latest?cb=20100706044200"); //legends
             put("Muunilinst", "https://static.wikia.nocookie.net/starwars/images/1/19/Muunilinst.jpg/revision/latest?cb=20071221131608"); //legends
             put("Shili", "https://static.wikia.nocookie.net/starwars/images/b/b8/ShiliNEGAS.jpg/revision/latest?cb=20061126102716"); //legends
             put("Kalee", "https://static.wikia.nocookie.net/starwars/images/c/c1/Kalee_TEA.jpg/revision/latest?cb=20200828221630"); //legends
